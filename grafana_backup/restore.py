@@ -4,6 +4,7 @@ from grafana_backup.create_folder import main as create_folder
 from grafana_backup.create_datasource import main as create_datasource
 from grafana_backup.create_dashboard import main as create_dashboard
 from grafana_backup.create_alert_channel import main as create_alert_channel
+from grafana_backup.create_playlist import main as create_playlist
 from grafana_backup.create_user import main as create_user
 from grafana_backup.s3_download import main as s3_download
 from glob import glob
@@ -59,9 +60,10 @@ def restore_from_dir(args, arg_components, settings, restore_dir):
                             'datasource': create_datasource,
                             'dashboard': create_dashboard,
                             'alert_channel': create_alert_channel,
+                            'playlist': create_playlist,
                             'organization': create_org,
                             'user': create_user}
-
+                            
     if arg_components:
         arg_components_list = arg_components.split(',')
 

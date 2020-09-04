@@ -134,13 +134,25 @@ def search_playlists(grafana_url, http_get_headers, verify_ssl, client_cert, deb
     return send_grafana_get('{0}/api/playlists'.format(grafana_url), http_get_headers, verify_ssl,
                             client_cert, debug)
 
+def search_all_playlists(grafana_url, http_get_headers, verify_ssl, client_cert, debug):
+    print("search all playlists in grafana:")
+    return send_grafana_get('{0}/api/playlists'.format(grafana_url), http_get_headers, verify_ssl,
+                            client_cert, debug)
 
 def get_playlist(id, grafana_url, http_get_headers, verify_ssl, client_cert, debug):
     (status_code, content) = send_grafana_get('{0}/api/playlists/{1}'.format(grafana_url, id), http_get_headers,
                                               verify_ssl, client_cert, debug)
-    print("query playlist:{0}, status:{1}".format(id, status_code))
+    print("get playlist:{0}, status:{1}".format(id, status_code))
     return (status_code, content)
 
+
+def create_playlist(payload, grafana_url, http_post_headers, verify_ssl, client_cert, debug):
+    return send_grafana_post('{0}/api/playlists'.format(grafana_url), payload, http_post_headers, verify_ssl, client_cert,
+                             debug)
+
+def update_playlist(id, payload, grafana_url, http_post_headers, verify_ssl, client_cert, debug):
+    return send_grafana_put('{0}/api/playlists/{1}'.format(grafana_url, id), payload, http_post_headers, verify_ssl, client_cert,
+                             debug)
 
 def send_grafana_get(url, http_get_headers, verify_ssl, client_cert, debug):
     r = requests.get(url, headers=http_get_headers, verify=verify_ssl, cert=client_cert)
@@ -148,9 +160,16 @@ def send_grafana_get(url, http_get_headers, verify_ssl, client_cert, debug):
         log_response(r)
     return (r.status_code, r.json())
 
+def send_grafana_put(url, json_payload, http_post_headers, verify_ssl=False, client_cert=None, debug=True):
+    r = requests.put(url, headers=http_post_headers, data=json_payload, verify=verify_ssl, cert=client_cert)
+    print( 'url: {0}'.format(url))
+    if debug:
+        log_response(r)
+    return (r.status_code, r.json())
 
 def send_grafana_post(url, json_payload, http_post_headers, verify_ssl=False, client_cert=None, debug=True):
     r = requests.post(url, headers=http_post_headers, data=json_payload, verify=verify_ssl, cert=client_cert)
+    print( 'url: {0}'.format(url))
     if debug:
         log_response(r)
     return (r.status_code, r.json())
