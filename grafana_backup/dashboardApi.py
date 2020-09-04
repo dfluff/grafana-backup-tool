@@ -128,6 +128,20 @@ def add_user_to_org(org_id, payload, grafana_url, http_post_headers, verify_ssl,
     return send_grafana_post('{0}/api/orgs/{1}/users'.format(grafana_url, org_id), payload, http_post_headers, verify_ssl, client_cert,
                              debug)
 
+
+def search_playlists(grafana_url, http_get_headers, verify_ssl, client_cert, debug):
+    print("search playlists in grafana:")
+    return send_grafana_get('{0}/api/playlists'.format(grafana_url), http_get_headers, verify_ssl,
+                            client_cert, debug)
+
+
+def get_playlist(id, grafana_url, http_get_headers, verify_ssl, client_cert, debug):
+    (status_code, content) = send_grafana_get('{0}/api/playlists/{1}'.format(grafana_url, id), http_get_headers,
+                                              verify_ssl, client_cert, debug)
+    print("query playlist:{0}, status:{1}".format(id, status_code))
+    return (status_code, content)
+
+
 def send_grafana_get(url, http_get_headers, verify_ssl, client_cert, debug):
     r = requests.get(url, headers=http_get_headers, verify=verify_ssl, cert=client_cert)
     if debug:

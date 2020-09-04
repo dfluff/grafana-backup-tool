@@ -3,6 +3,7 @@ from grafana_backup.save_dashboards import main as save_dashboards
 from grafana_backup.save_datasources import main as save_datasources
 from grafana_backup.save_folders import main as save_folders
 from grafana_backup.save_alert_channels import main as save_alert_channels
+from grafana_backup.save_playlists import main as save_playlists
 from grafana_backup.archive import main as archive
 from grafana_backup.s3_upload import main as s3_upload
 from grafana_backup.save_orgs import main as save_orgs
@@ -20,6 +21,7 @@ def main(args, settings):
                         'datasources': save_datasources,
                         'folders': save_folders,
                         'alert-channels': save_alert_channels,
+                        'playlists': save_playlists,
                         'organizations': save_orgs,
                         'users': save_users}
 
